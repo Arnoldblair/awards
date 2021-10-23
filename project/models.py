@@ -51,10 +51,25 @@ class Projects(models.Model):
     image_landing = CloudinaryField('image')
     description = HTMLField(max_length=200,blank=True)
     link = URLOrRelativeURLField(max_length=200)
-    pub_date = models.DateTimeField(auto_now_add=True)    
+    pub_date = models.DateTimeField(auto_now_add=True)  
+
+    @classmethod
+    def search_by_projects(cls,search_term):
+        projects = cls.objects.filter(title__icontains=search_term)
+        print(projects)
+        return projects 
+    
+    @classmethod
+    def get_profile_projects(cls,profile):
+       projects = Projects.objects.filter(profile__pk=profile)
+       print(projects)
+       return projects
+    
+    
+    def __str__(self):
+        return self.title  
 
     
-
 class Rates(models.Model):
     design = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
     usability = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
