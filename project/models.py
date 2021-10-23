@@ -25,3 +25,10 @@ class Projects(models.Model):
     description = HTMLField(max_length=200,blank=True)
     link = URLOrRelativeURLField(max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)    
+
+class Rates(models.Model):
+    design = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
+    usability = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
+    content = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)]) 
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    project = models.IntegerField(default=0)     
