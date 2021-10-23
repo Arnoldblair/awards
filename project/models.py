@@ -35,6 +35,8 @@ class Projects(models.Model):
     def save_profile(sender,instance,**kwargs):
         instance.profile.save()  
         
+    def save_profile(self):
+        self.save()    
     
     @classmethod
     def get_by_id(cls,id):
