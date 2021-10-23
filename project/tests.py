@@ -14,3 +14,19 @@ class ProfileTestClass(TestCase):
         self.edwin.save_profile()
         profiles = Profile.objects.all()
         self.assertTrue(len(profiles)>0)
+
+class ProjectTestClass(TestCase):
+    def setUp(self):
+        self.edwin = Profile(user = 'edwin',bio='hello')
+        self.edwin.save_profile()
+
+       
+
+    def tearDown(self):
+        Projects.objects.all().delete()
+        
+        Projects.objects.all().delete()    
+
+    def test_projects(self):
+        posts = Projects.posts()
+        self.assertTrue(len(posts)>0)        
