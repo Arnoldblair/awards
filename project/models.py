@@ -14,3 +14,14 @@ class Profile(models.Model):
     bio = HTMLField(max_length=500,default='Your description')
     website = URLOrRelativeURLField() 
     phone_number = models.CharField(max_length=10,default='00000')
+
+class Projects(models.Model): 
+    profile = models.ForeignKey(User,null=True,on_delete=models.CASCADE) 
+    title = models.CharField(max_length=20,blank=True)
+    design=models.IntegerField(default=0)
+    usability=models.IntegerField(default=0)
+    content=models.IntegerField(default=0)
+    image_landing = CloudinaryField('image')
+    description = HTMLField(max_length=200,blank=True)
+    link = URLOrRelativeURLField(max_length=200)
+    pub_date = models.DateTimeField(auto_now_add=True)    
