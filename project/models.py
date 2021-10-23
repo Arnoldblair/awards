@@ -15,17 +15,6 @@ class Profile(models.Model):
     website = URLOrRelativeURLField() 
     phone_number = models.CharField(max_length=10,default='00000')
 
-class Projects(models.Model): 
-    profile = models.ForeignKey(User,null=True,on_delete=models.CASCADE) 
-    title = models.CharField(max_length=20,blank=True)
-    design=models.IntegerField(default=0)
-    usability=models.IntegerField(default=0)
-    content=models.IntegerField(default=0)
-    image_landing = CloudinaryField('image')
-    description = HTMLField(max_length=200,blank=True)
-    link = URLOrRelativeURLField(max_length=200)
-    pub_date = models.DateTimeField(auto_now_add=True)    
-
     @receiver(post_save, sender=User)
     def create_profile(sender, instance, created, **kwargs):
         if created:
@@ -52,6 +41,19 @@ class Projects(models.Model):
     
     def __str__(self):
         return self.bio
+
+class Projects(models.Model): 
+    profile = models.ForeignKey(User,null=True,on_delete=models.CASCADE) 
+    title = models.CharField(max_length=20,blank=True)
+    design=models.IntegerField(default=0)
+    usability=models.IntegerField(default=0)
+    content=models.IntegerField(default=0)
+    image_landing = CloudinaryField('image')
+    description = HTMLField(max_length=200,blank=True)
+    link = URLOrRelativeURLField(max_length=200)
+    pub_date = models.DateTimeField(auto_now_add=True)    
+
+    
 
 class Rates(models.Model):
     design = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
