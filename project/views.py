@@ -20,12 +20,12 @@ def profile(request,username):
     return render(request, 'users/profile.html',{"profile":profile,"profile_details":profile_details,"projects":projects}) 
 
 def home(request):
-    projects = Projects.objects.all()
+    project = Projects.objects.all()
     
     context = {
-        'projects':projects,
+        'projects':project,
     }
-    return render(request,'home.html')
+    return render(request,'home.html',{'project':project})
 
 def post_site(request):
     current_user = request.user
