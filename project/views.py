@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Profile,Projects,Rates,Comments
+from .models import Profile,Projects,Rates
 
 # Create your views here.
 def welcome(request):
@@ -16,3 +16,11 @@ def profile(request,username):
     projects = Projects.get_profile_projects(profile.id)
     
     return render(request, 'users/profile.html',{"profile":profile,"profile_details":profile_details,"projects":projects}) 
+
+def home(request):
+    projects = Projects.objects.all()
+    
+    context = {
+        'projects':projects,
+    }
+    return render(request,'home.html')

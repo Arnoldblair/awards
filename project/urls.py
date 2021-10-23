@@ -5,7 +5,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns=[
-    url('^$',views.welcome,name = 'welcome'),
+    #url('^$',views.welcome,name = 'welcome'),
+    url('^$',views.home,name='home'),
     url(r'^profile/(?P<username>\w+)', views.profile, name='profile'),
 ]
 if settings.DEBUG:
