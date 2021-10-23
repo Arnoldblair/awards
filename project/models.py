@@ -15,14 +15,14 @@ class Profile(models.Model):
     website = URLOrRelativeURLField() 
     phone_number = models.CharField(max_length=10,default='00000')
 
-    @receiver(post_save, sender=User)
-    def create_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
+    # @receiver(post_save, sender=User)
+    # def create_profile(sender, instance, created):
+    #     if created:
+    #         Profile.objects.create(user=instance)
      
-    @receiver(post_save, sender=User) 
-    def save_profile(sender,instance,**kwargs):
-        instance.profile.save()  
+    # @receiver(post_save, sender=User) 
+    # def save_profile(sender,instance,**kwargs):
+    #     instance.profile.save()  
         
     def save_profile(self):
         self.save()    
