@@ -29,4 +29,12 @@ class ProjectTestClass(TestCase):
 
     def test_projects(self):
         posts = Projects.posts()
-        self.assertTrue(len(posts)>0)        
+        self.assertTrue(len(posts)>0)     
+
+class RatesTestClass(TestCase):
+    def setUp(self):
+        self.user = Profile
+        self.rate = Rates(design=10,usability=10,content=10,user=self.user,project=10)
+        self.rate.save()
+        
+        self.assertTrue(isinstance(self.rate,Rates))                   
