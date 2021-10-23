@@ -51,7 +51,12 @@ class Projects(models.Model):
     image_landing = CloudinaryField('image')
     description = HTMLField(max_length=200,blank=True)
     link = URLOrRelativeURLField(max_length=200)
-    pub_date = models.DateTimeField(auto_now_add=True)  
+    pub_date = models.DateTimeField(auto_now_add=True) 
+
+    @classmethod
+    def print_all(cls):
+        project = Projects.objects.all().order_by('-id')
+        return project 
 
     @classmethod
     def search_by_projects(cls,search_term):
@@ -65,6 +70,8 @@ class Projects(models.Model):
        print(projects)
        return projects
     
+    def save_project(self):
+        self.save()
     
     def __str__(self):
         return self.title  
