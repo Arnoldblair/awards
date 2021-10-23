@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'project',
     'bootstrap3',
     'tinymce',
+    'url_or_relative_url_field',
 ]
 
 MIDDLEWARE = [
