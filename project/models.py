@@ -26,6 +26,31 @@ class Projects(models.Model):
     link = URLOrRelativeURLField(max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)    
 
+    @receiver(post_save, sender=User)
+    def create_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+     
+    @receiver(post_save, sender=User) 
+    def save_profile(sender,instance,**kwargs):
+        instance.profile.save()  
+        
+    
+    @classmethod
+    def get_by_id(cls,id):
+        profile = Profile.objects.get(user = id)
+        return profile
+    
+    @classmethod
+    def filter_by_id(cls,id): 
+        profile = Profile.objects.filter(user = id).first()
+        return profile
+    
+   
+    
+    def __str__(self):
+        return self.bio
+
 class Rates(models.Model):
     design = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
     usability = models.PositiveIntegerField(default=0,validators=[MaxValueValidator(10)])
