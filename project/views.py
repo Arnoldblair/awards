@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from .models import Profile,Projects,Rates
+from django.http import Http404
+from .forms import ProfileEditForm,ProjectUploadForm,VotesForm
 
 # Create your views here.
 def welcome(request):
@@ -24,3 +26,17 @@ def home(request):
         'projects':projects,
     }
     return render(request,'home.html')
+
+def post_site(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = ProjectUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            home = form.save(commit=False)
+            home.profile =current_user
+            form.save()
+        return redirect('home')
+    else:
+        form =ProjectUploadForm()
+            
+    return render(request,'uploads.html',{"form":form,})    
