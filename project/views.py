@@ -8,11 +8,13 @@ from rest_framework.views import APIView
 from rest_framework import status
 from .permissions import IsAdminOrReadOnly
 from .serializer import ProfileSerializer,ProjectsSerializer
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def welcome(request):
     return render(request, 'test.html')
 
+@login_required(login_url='/accounts/login/')
 def profile(request,username):
     profile = User.objects.get(username=username)
     
@@ -24,6 +26,7 @@ def profile(request,username):
     
     return render(request, 'users/profile.html',{"profile":profile,"profile_details":profile_details,"projects":projects}) 
 
+@login_required(login_url='/accounts/login/')
 def home(request):
     projects = Projects.objects.all()
     print(f"projects:{projects}")
@@ -32,6 +35,7 @@ def home(request):
     # }
     return render(request,'home.html',{"projects":projects})
 
+@login_required(login_url='/accounts/login/')
 def post_site(request):
     current_user = request.user
     if request.method == 'POST':
@@ -46,6 +50,7 @@ def post_site(request):
             
     return render(request,'uploads.html',{"form":form,})    
 
+@login_required(login_url='/accounts/login/')
 def search_results(request):
     if 'titles' in request.GET and request.GET['titles']:
         search_term = request.GET.get("titles")
@@ -62,6 +67,7 @@ def search_results(request):
 
         return render(request,'search.html',{"message":message})   
 
+
 class ProfileList(APIView):
     permission_classes = (IsAdminOrReadOnly,)
     def get(self,request,format=None):
@@ -75,6 +81,7 @@ class ProfileList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProjectsList(APIView):
     permission_classes = (IsAdminOrReadOnly,)
@@ -90,6 +97,7 @@ class ProjectsList(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)       
 
+@login_required(login_url='/accounts/login/')
 def projects(request,project_id):
     try:
         projects = Projects.objects.get(id=project_id)
