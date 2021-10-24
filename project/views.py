@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from .models import Profile,Projects,Rates
 from django.http import Http404
 from .forms import ProfileEditForm,ProjectUploadForm,VotesForm
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from .permissions import IsAdminOrReadOnly
+from .serializer import ProfileSerializer,ProjectsSerializer
 
 # Create your views here.
 def welcome(request):
@@ -55,4 +60,32 @@ def search_results(request):
         search_term = request.GET.get("titles")
         searched_projects = Projects.search_by_projects(search_term)
 
-        return render(request,'search.html',{"message":message})    
+        return render(request,'search.html',{"message":message})   
+
+class ProfileList(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    def get(self,request,format=None):
+        all_profiles = Profile.objects.all()
+        serializers = ProfileSerializer(all_profiles,many=True)
+        return Response(serializers.data)
+    
+    def post(self, request, format=None):
+        serializers = ProfileSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProjectsList(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    def get(self,request,format=None):
+        all_projects = Projects.objects.all()
+        serializers = ProjectsSerializer(all_projects,many=True)
+        return Response(serializers.data)
+    
+    def post(self, request, format=None):
+        serializers = ProjectsSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)             

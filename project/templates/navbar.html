@@ -9,8 +9,14 @@
           <!--Trigger-->
           <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">APIS</button>
-  
-  
+            <a class="dropdown-item" href="{% url 'profile_list' %}">Profiles</a>
+            <a class="dropdown-item" href="{% url 'projects_list' %}">Projects</a>
+
+            <!--Menu-->
+         <div class="dropdown-menu ">
+            <a class="dropdown-item" href="{% url 'profile_list' %}">Profiles</a>
+            <a class="dropdown-item" href="{% url 'projects_list' %}">Projects</a>
+          </div>
          
         </div>
       <div class="nav-search">
