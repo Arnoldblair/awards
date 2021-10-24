@@ -55,4 +55,4 @@ def search_results(request):
         search_term = request.GET.get("titles")
         searched_projects = Projects.search_by_projects(search_term)
 
-        return render(request,'search.html',{"message":message,"projects":searched_projects})    
+        return render(request,'search.html',{"message":message})    
