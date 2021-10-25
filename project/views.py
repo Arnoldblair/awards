@@ -30,9 +30,7 @@ def profile(request,username):
 def home(request):
     projects = Projects.objects.all()
     print(f"projects:{projects}")
-    # context = {
-    #     'projects':project,
-    # }
+    
     return render(request,'home.html',{"projects":projects})
 
 @login_required(login_url='/accounts/login/')

@@ -7,28 +7,41 @@
 <div class="row">
     {% for project in projects %}
     <div class="col-md-4">
-    <div class="card-group wow fadeInLeft"  style="margin:2%;" data-aos='fade-up'>
-            <div class="view overlay zoom ">
-                    <img src="{{project.image_landing.url}}" class="card-img-top">
-                    <div class="mask flex-center rgba-black-strong">
-                        <a href="{% url 'projects' project.pk %}" class="btn btn-pink" >VIEW <i class="far fa-chevron-double-right"></i>  </a>
-                    </div>
+    
+    <div class="card" style="min-height:300px;">
+        <div class="card-block">
+            <img src="{{project.image_landing.url}}" alt="image" class="card-img-top">
+            <div class="mask flex-center rgba-black-strong">
+                <button type="button" class="btn btn-success" style="margin-top: 6px;">
+                    <a href="{% url 'projects' project.pk %}" class="btn btn-pink" >VOTE <i class="far fa-chevron-double-right"></i>  </a>
+                </button>
+                
             </div>
-    
-    <div class="card-body" style="border:2px #00BCD4;">
-        
-        <p class="black-text pull-right">{{project.pub_date|date:"F d,Y"}}</p>
-        <h6>By  {{project.profile}}</h6>
-        
-     
-    </div>
-    
+            
+            <div class="card-text">
+                <a href="{% url 'projects' project.pk %}"><h5 class="strong-text"> <strong>{{project.title}}</strong> </h5> </a> <hr class="bg-info">
+                <p class="black-text pull-right">{{project.pub_date|date:"F d,Y"}}</p>
+                <h6>By  {{project.profile}}</h6>
+            </div>
+            <br>
+           
+        </div>
     </div>
     
     </div>
     {% endfor %}
     </div>
 </div>
+<style>
+    .card:hover{
+        padding: 5px;
+        box-shadow: 3px 3px 5px #2196F3;
+        cursor: pointer;
+    }
 
+    body{
+        background-color: #FAFAFA;
+    }
+</style>
 
 {% endblock %}
