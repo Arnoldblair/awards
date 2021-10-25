@@ -26,7 +26,7 @@ def profile(request,username):
     
     return render(request, 'users/profile.html',{"profile":profile,"profile_details":profile_details,"projects":projects}) 
 
-@login_required(login_url='/accounts/login/')
+
 def home(request):
     projects = Projects.objects.all()
     print(f"projects:{projects}")
@@ -48,7 +48,7 @@ def post_site(request):
             
     return render(request,'uploads.html',{"form":form,})    
 
-@login_required(login_url='/accounts/login/')
+
 def search_results(request):
     if 'titles' in request.GET and request.GET['titles']:
         search_term = request.GET.get("titles")
